@@ -1,0 +1,595 @@
+:root {
+  --morado-principal: #6a1b9a;
+  --morado-oscuro: #4a148c;
+  --fondo-claro: #f4f6f8;
+  /* Un fondo muy claro para las secciones */
+  --fondo-app: linear-gradient(to bottom right, #6a1b9a, #8e24aa, #bb88cc, #d8bade);
+  /* Degradado suave para el body */
+  --texto-oscuro: #333;
+  --blanco: #ffffff;
+  --sombra-suave: rgba(0, 0, 0, 0.1);
+  --sombra-media: rgba(0, 0, 0, 0.15);
+  --sombra-fuerte: rgba(0, 0, 0, 0.25);
+  --borde-suave: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+  /* Aplicar la fuente consistentemente */
+}
+
+body {
+  background-image: var(--fondo-app);
+  /* Aplicar el degradado suave como fondo principal */
+  color: var(--texto-oscuro);
+  /* Cambiar a texto-oscuro para mejor contraste en secciones blancas */
+  display: flex;
+  min-height: 100vh;
+  overflow-x: hidden;
+  /* Evitar scroll horizontal en responsive */
+}
+
+/* NAVBAR SUPERIOR */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background-color: var(--morado-principal);
+  /* Navbar con color sólido o degradado */
+  /* background-image: linear-gradient(to right, var(--morado-oscuro), var(--morado-principal)); */
+  /* Opcional: degradado en navbar */
+  color: var(--blanco);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+  z-index: 1000;
+  box-shadow: 0 4px 10px var(--sombra-suave);
+  /* Sombra más pronunciada */
+}
+
+.navbar h1 {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2.5rem;
+  font-weight: 700;
+  /* Más negrita */
+  text-shadow: 1px 1px 3px var(--sombra-fuerte);
+  /* Sombra para el texto */
+}
+
+
+/* BOTÓN DE MENÚ (HAMBURGUESA) */
+.menu-toggle {
+  background: none;
+  border: none;
+  color: var(--blanco);
+  font-size: 1.8rem;
+  /* Tamaño más grande */
+  cursor: pointer;
+  display: none;
+  transition: transform 0.2s ease;
+}
+
+.menu-toggle:hover {
+  transform: scale(1.1);
+}
+
+/* MENÚ LATERAL */
+.menu {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  width: 220px;
+  height: calc(100% - 60px);
+  background-color: var(--morado-principal);
+  /* Fondo principal del menú */
+  /* background-image: linear-gradient(to bottom, var(--morado-oscuro), var(--morado-principal)); */
+  /* Opcional: degradado en menú */
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  z-index: 999;
+  box-shadow: 4px 0 10px var(--sombra-suave);
+  /* Sombra lateral */
+  transition: left 0.3s ease;
+}
+
+.menu button {
+  background-color: var(--blanco);
+  color: var(--morado-principal);
+  border: none;
+  padding: 0.75rem;
+  border-radius: 8px;
+  /* Bordes más redondeados */
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  /* Más negrita */
+  box-shadow: 0 2px 5px var(--sombra-suave);
+  /* Sombra suave */
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.menu button:hover {
+  background-color: #e1dbee;
+  /* Tono más claro */
+  transform: translateY(-2px);
+  /* Pequeña elevación */
+  box-shadow: 0 4px 8px var(--sombra-media);
+  /* Sombra al pasar el ratón */
+}
+
+/* CONTENIDO PRINCIPAL */
+.main {
+  margin-left: 240px;
+  margin-top: 80px;
+  /* Más margen superior para dejar espacio a la navbar y sombra */
+  padding: 2rem;
+  width: calc(100% - 240px);
+  position: relative;
+  /* Para el z-index si es necesario */
+  z-index: 1;
+  /* Para que el contenido esté sobre el fondo degradado del body */
+}
+
+section {
+  margin-bottom: 2rem;
+  background-color: var(--blanco);
+  /* Fondo blanco para todas las secciones */
+  padding: 1.5rem;
+  border-radius: 12px;
+  /* Bordes más redondeados para las secciones */
+  box-shadow: 0 5px 15px var(--sombra-suave);
+  /* Sombra para que flote un poco */
+}
+
+h2 {
+  margin-bottom: 1rem;
+  color: var(--morado-principal);
+  font-size: 1.8rem;
+  /* Tamaño de h2 consistente */
+  font-weight: 600;
+}
+
+h3 {
+  /* Estilo para los nuevos h3 en Configuración */
+  margin-top: 1rem;
+  /* Espacio superior */
+  margin-bottom: 0.8rem;
+  color: var(--morado-oscuro);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.4rem;
+  /* Tamaño de h3 */
+}
+
+/* FORMULARIOS GENERALES */
+form {
+  background-color: transparent;
+  /* El formulario no necesita fondo si la sección ya lo tiene */
+  padding: 0;
+  /* Anular padding del formulario si la sección ya lo tiene */
+  box-shadow: none;
+  /* Anular sombra del formulario si la sección ya lo tiene */
+  max-width: 100%;
+  /* Asegurar que ocupe el ancho disponible de la sección */
+  margin-left: 0;
+  margin-right: 0;
+}
+
+form label {
+  display: block;
+  margin-top: 0.8rem;
+  margin-bottom: 0.2rem;
+  font-weight: 600;
+  color: var(--texto-oscuro);
+}
+
+form input:not([type="hidden"]),
+form select {
+  width: 100%;
+  padding: 0.8rem;
+  /* Más padding para inputs */
+  margin: 0.5rem 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  /* Bordes más redondeados */
+  box-sizing: border-box;
+  font-size: 1rem;
+  background-color: var(--fondo-claro);
+  /* Fondo claro para inputs */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+form input:focus,
+form select:focus {
+  border-color: var(--morado-principal);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(106, 27, 154, 0.1);
+  /* Sombra de foco */
+  background-color: var(--blanco);
+  /* Blanco al enfocar */
+}
+
+form input[disabled] {
+  background-color: #e9ecef;
+  /* Un gris más claro para deshabilitado */
+  color: #6c757d;
+  cursor: not-allowed;
+  border: 1px dashed #ced4da;
+  /* Borde punteado para indicar que no es editable */
+}
+
+form button {
+  background-color: var(--morado-principal);
+  color: var(--blanco);
+  border: none;
+  padding: 0.8rem 1.5rem;
+  /* Más padding para botones */
+  border-radius: 8px;
+  /* Bordes más redondeados */
+  cursor: pointer;
+  font-size: 1.1rem;
+  /* Tamaño de fuente para botones */
+  font-weight: 600;
+  margin-top: 1.5rem;
+  /* Más margen superior para botones de acción */
+  box-shadow: 0 4px 8px var(--sombra-suave);
+  /* Sombra para botones */
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+form button:hover {
+  background-color: var(--morado-oscuro);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px var(--sombra-media);
+}
+
+/* Estilos específicos para botones de editar/guardar/cancelar en configuración */
+.edit-btn,
+.save-btn,
+.cancel-btn {
+  background-color: #28a745;
+  /* Verde para editar */
+  color: var(--blanco);
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+  margin-left: 0.5rem;
+  /* Espacio si hay varios botones */
+  box-shadow: none;
+  /* No queremos la sombra general del botón para estos pequeños */
+  transform: none;
+  /* Anular la transformación al hover */
+}
+
+.edit-btn:hover {
+  background-color: #218838;
+}
+
+.save-btn {
+  background-color: #007bff;
+  /* Azul para guardar */
+}
+
+.save-btn:hover {
+  background-color: #0056b3;
+}
+
+.cancel-btn {
+  background-color: #6c757d;
+  /* Gris para cancelar */
+}
+
+.cancel-btn:hover {
+  background-color: #5a6268;
+}
+
+/* Contenedor de cada sección editable en Configuración */
+.config-section {
+  background-color: transparent;
+  /* Fondo transparente si la sección ya lo tiene */
+  padding: 0;
+  /* Anula el padding de la sección general */
+  box-shadow: none;
+  /* Anula la sombra de la sección general */
+  margin-bottom: 2rem;
+}
+
+.config-section form {
+  /* Anula el max-width y margen auto del form general */
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  box-shadow: none;
+  background-color: transparent;
+}
+
+
+/* SECCIONES (visibilidad) */
+.seccion-oculta {
+  display: none;
+}
+
+.seccion-visible {
+  display: block;
+}
+
+/* MAPAS */
+#map,
+#mapa-historial,
+#mapa-zonas {
+  /* Aplica el estilo a todos los divs de mapa */
+  width: 100%;
+  height: 400px;
+  border-radius: 8px;
+  /* Bordes redondeados */
+  box-shadow: 0 2px 10px var(--sombra-suave);
+  /* Sombra sutil para mapas */
+  margin-top: 1rem;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  .navbar h1 {
+    font-size: 1.8rem;
+    white-space: nowrap;
+    position: static;
+    /* Volver a estático para que no se superponga */
+    transform: none;
+    /* Quitar transformación */
+    margin: 0 auto;
+    /* Centrar manualmente */
+  }
+
+  .navbar {
+    padding: 0 0.5rem;
+    justify-content: flex-start;
+    /* Ajustar alineación para dejar espacio al toggle */
+    gap: 1rem;
+    /* Espacio entre toggle y título */
+  }
+
+  .menu {
+    left: -240px;
+    width: 200px;
+  }
+
+  .menu.abierta {
+    left: 0;
+  }
+
+  .main {
+    margin-left: 0;
+    width: 100%;
+    padding: 1rem;
+    margin-top: 60px;
+    /* Ajustar margen superior si navbar cambia */
+  }
+
+  section {
+    padding: 1rem;
+    /* Menos padding en móvil */
+    border-radius: 10px;
+  }
+
+  form {
+    max-width: 100%;
+  }
+
+  /* Asegurarse de que el título principal de la navbar no se salga */
+  .navbar h1 {
+    font-size: 1.5rem;
+    /* Reducir aún más en móvil */
+    white-space: normal;
+    /* Permitir que el texto se rompa en líneas */
+  }
+}
+
+.datos-ubicacion,
+.datos-ubicacion-historial {
+  /* Estilos para los divs de datos bajo los mapas */
+  margin-top: 1rem;
+  background-color: var(--blanco);
+  padding: 1.5rem;
+  /* Más padding */
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 2px 5px var(--sombra-suave);
+}
+
+.datos-ubicacion p,
+.datos-ubicacion-historial p {
+  margin: 0.5rem 0;
+  font-size: 1rem;
+}
+
+/* Estilos para las listas de elementos guardados (zonas, dispositivos) */
+#lista-zonas-seguras,
+#lista-dispositivos {
+  background-color: var(--blanco);
+  padding: 1.5rem;
+  /* Más padding */
+  border-radius: 8px;
+  box-shadow: 0 2px 10px var(--sombra-suave);
+  margin-top: 1.5rem;
+  /* Más margen superior */
+}
+
+#lista-zonas-seguras p,
+#lista-dispositivos p {
+  margin-bottom: 0.8rem;
+  /* Más espacio */
+  padding-bottom: 0.8rem;
+  border-bottom: 1px dashed #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  font-size: 0.95rem;
+  /* Texto un poco más grande */
+}
+
+#lista-zonas-seguras p:last-child,
+#lista-dispositivos p:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+/* Botón de eliminar zona/dispositivo dentro de la lista */
+.delete-zone-btn,
+.delete-device-btn {
+  background-color: #dc3545;
+  /* Rojo para eliminar */
+  color: var(--blanco);
+  border: none;
+  padding: 0.4rem 0.8rem;
+  /* Más padding */
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  /* Un poco más grande */
+  margin-left: 10px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  flex-shrink: 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* Sombra sutil */
+}
+
+.delete-zone-btn:hover,
+.delete-device-btn:hover {
+  background-color: #c82333;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+
+/* --- ESTILOS PARA EL MODAL DE CONFIRMACIÓN DE CONTRASEÑA --- */
+.modal {
+  display: none;
+  /* Oculto por defecto, JS lo cambia a flex */
+  position: fixed;
+  z-index: 1001;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.6);
+  /* Fondo más oscuro para el modal */
+  justify-content: center;
+  align-items: center;
+}
+
+.modal[style*="display: flex"] {
+  display: flex;
+}
+
+.modal-content {
+  background-color: var(--blanco);
+  padding: 25px;
+  /* Más padding */
+  border: 1px solid #888;
+  width: 90%;
+  /* Más ancho en general */
+  max-width: 450px;
+  /* Ancho máximo aumentado */
+  border-radius: 12px;
+  /* Bordes más redondeados */
+  box-shadow: 0 8px 20px var(--sombra-fuerte);
+  /* Sombra más pronunciada */
+  text-align: center;
+  position: relative;
+}
+
+.modal-content h3 {
+  /* Estilo para el título del modal */
+  color: var(--morado-principal);
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  justify-content: center;
+  /* Centrar el texto si no tiene botón de editar */
+}
+
+.modal-content p {
+  margin-bottom: 1rem;
+  color: var(--texto-oscuro);
+  font-size: 1rem;
+}
+
+.modal-content input[type="password"] {
+  width: calc(100% - 30px);
+  /* Ajustar para nuevo padding */
+  padding: 12px;
+  /* Más padding */
+  margin: 15px 0;
+  /* Más margen */
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-size: 1.1rem;
+  /* Fuente más grande */
+  background-color: var(--fondo-claro);
+}
+
+.modal-content button {
+  background-color: var(--morado-principal);
+  color: var(--blanco);
+  border: none;
+  padding: 10px 20px;
+  /* Más padding */
+  border-radius: 8px;
+  cursor: pointer;
+  margin: 8px;
+  /* Más margen */
+  font-size: 1.1rem;
+  /* Más grande */
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 2px 5px var(--sombra-suave);
+}
+
+.modal-content button:hover {
+  background-color: var(--morado-oscuro);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px var(--sombra-media);
+}
+
+.modal-content .close-button {
+  background: none;
+  color: #aaa;
+  font-size: 32px;
+  /* Más grande */
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  /* Ajustar posición */
+  right: 15px;
+  line-height: 1;
+}
+
+.modal-content .close-button:hover,
+.modal-content .close-button:focus {
+  color: black;
+  text-decoration: none;
+}

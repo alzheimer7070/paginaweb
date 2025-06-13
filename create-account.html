@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crear Nueva Cuenta - Monitoreo Alzheimer</title>
+  <link rel="stylesheet" href="css/estilos-formularios.css">
+</head>
+
+<body>
+  <div class="contenido-principal">
+    <div class="form-container">
+      <div class="header">
+        <h1>Crear Nueva Cuenta</h1>
+      </div>
+
+      <form id="create-account-form">
+
+        <div class="input-group-two-columns">
+          <input type="text" id="nombreCuidador" placeholder="Nombre completo del cuidador" required>
+          <input type="number" id="edad" placeholder="Edad" required min="18">
+        </div>
+
+        <input type="text" id="ocupacion" placeholder="Ocupación">
+        <input type="text" id="parentesco" placeholder="Parentesco con el paciente">
+        <input type="text" id="usuario" placeholder="Usuario" required>
+        <input type="email" id="email" placeholder="Correo electrónico" required>
+        <input type="tel" id="telefono" placeholder="Número de teléfono">
+
+        <div class="input-group-two-columns">
+          <input type="password" id="password" placeholder="Contraseña" required>
+          <input type="password" id="confirmPassword" placeholder="Confirmación" required>
+        </div>
+        <div class="password-info">
+          <p>Utiliza ocho caracteres como mínimo con una combinación de letras, números y símbolos</p>
+          <label class="checkbox-container">
+            <input type="checkbox" id="showPassword"> Mostrar contraseña
+            <span class="checkmark"></span>
+          </label>
+        </div>
+
+
+        <button type="submit">Guardar</button>
+      </form>
+
+      <p id="message"></p>
+      <div class="links">
+        <a href="login.html">Prefiero iniciar sesión</a>
+      </div>
+    </div>
+  </div>
+  <script src="js/create-account.js"></script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Registrar Paciente</title>
+  <link rel="stylesheet" href="css/estilos-alzheimer.css" />
+</head>
+
+<body>
+  <header class="navbar">
+    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+    <h1>Monitoreo Alzheimer</h1>
+  </header>
+
+  <aside class="menu">
+    <button onclick="window.location.href='index.html#mapa'">Mapa actual</button>
+    <button onclick="window.location.href='registro-dispositivo.html'">Registrar Dispositivo</button>
+    <button onclick="window.location.href='index.html#historial'">Historial de Ubicación</button>
+    <button onclick="window.location.href='index.html#dispoReg'">Dispositivos Registrados</button>
+    <button onclick="window.location.href='index.html#zonas'">Zonas Seguras</button>
+    <button onclick="window.location.href='index.html#configuracion'">Configuración</button>
+    <button onclick="logout()">Cerrar Sesión</button>
+  </aside>
+
+  <main class="main">
+    <section>
+      <h2>Registrar Paciente</h2>
+      <p>Asocia un paciente al dispositivo registrado.</p>
+      <form onsubmit="return registrarPaciente(event)">
+        <input type="text" id="nombrePaciente" placeholder="Nombre completo del paciente" required />
+        <input type="number" id="edadPaciente" placeholder="Edad del paciente" required />
+        <input type="text" id="direccionPaciente" placeholder="Dirección del paciente" required />
+        <input type="tel" id="telefonoPaciente" placeholder="Teléfono de contacto del paciente" required />
+        <input type="text" id="idPacienteDispositivo" placeholder="ID del dispositivo" readonly />
+        <button type="submit">Registrar Paciente</button>
+      </form>
+      <p id="mensaje-paciente"></p>
+    </section>
+  </main>
+  <script>
+    // Funciones toggleMenu y logout, duplicadas aquí para que funcionen en esta página
+    function toggleMenu() {
+      const menu = document.querySelector('.menu');
+      menu.classList.toggle('abierta');
+    }
+
+    function logout() {
+      localStorage.clear();
+      window.location.href = 'login.html';
+    }
+
+    // La función `mostrarSeccion` no es necesaria en este archivo HTML.
+    // Si la tuvieras definida aquí, podrías eliminarla.
+
+
+    // Al cargar la página, intenta obtener el ID del dispositivo del localStorage
+    window.onload = () => {
+      const idDispositivoRegistrado = localStorage.getItem('lastRegisteredDeviceId');
+      const idPacienteDispositivoInput = document.getElementById('idPacienteDispositivo');
+      const mensaje = document.getElementById('mensaje-paciente');
+
+      // Validar si el usuario está autenticado
+      if (localStorage.getItem('isAuthenticated') !== 'true') {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      if (!idDispositivoRegistrado) {
+        mensaje.textContent = "Error: No hay un dispositivo verificado. Redirigiendo para registrar dispositivo...";
+        mensaje.style.color = 'red';
+        setTimeout(() => {
+          window.location.href = 'registro-dispositivo.html';
+        }, 2000);
+      } else {
+        idPacienteDispositivoInput.value = idDispositivoRegistrado;
+        mensaje.textContent = "Dispositivo " + idDispositivoRegistrado + " listo para vincular.";
+        mensaje.style.color = 'blue';
+      }
+    };
+
+    function registrarPaciente(event) {
+      event.preventDefault();
+      const nombre = document.getElementById('nombrePaciente').value;
+      const edad = document.getElementById('edadPaciente').value;
+      const direccion = document.getElementById('direccionPaciente').value;
+      const telefono = document.getElementById('telefonoPaciente').value;
+      const idDispositivo = document.getElementById('idPacienteDispositivo').value;
+      const mensaje = document.getElementById('mensaje-paciente');
+      const userId = localStorage.getItem('userId');
+
+      if (!userId) {
+        mensaje.textContent = "Error: Sesión no encontrada. Por favor, inicia sesión de nuevo.";
+        mensaje.style.color = 'red';
+        return;
+      }
+
+      // Validaciones básicas de formulario (puedes añadir más)
+      if (!nombre || !edad || !direccion || !telefono) {
+        mensaje.textContent = "Todos los campos del paciente son obligatorios.";
+        mensaje.style.color = 'red';
+        return;
+      }
+
+      // SIMULACIÓN DE REGISTRO DE PACIENTE
+      mensaje.textContent = `Paciente "${nombre}" registrado con el dispositivo "${idDispositivo}" para el cuidador (ID: ${userId}). (simulado)`;
+      mensaje.style.color = 'green';
+
+      localStorage.removeItem('dispositivoVerificado');
+      localStorage.removeItem('lastRegisteredDeviceId');
+
+      setTimeout(() => {
+        window.location.href = 'index.html';
+      }, 2000);
+    }
+  </script>
+</body>
+
+</html>

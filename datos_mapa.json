@@ -1,0 +1,26 @@
+[
+  {
+    "id": "Lilygo 7070g ESP32",
+    "latitud": 19.46846,
+    "longitud": -99.03962,
+    "fecha": "2025-05-28",
+    "hora": "05:39:27",
+    "descripcion": "Ubicación actual del dispositivo"
+  },
+  {
+    "id": "OtroDispositivoGPS",
+    "latitud": 19.47500,
+    "longitud": -99.04500,
+    "fecha": "2025-05-28",
+    "hora": "05:45:00",
+    "descripcion": "Ubicación de un segundo dispositivo"
+  },
+  {
+    "id": "TercerDispositivo",
+    "latitud": 19.46000,
+    "longitud": -99.03000,
+    "fecha": "2025-05-28",
+    "hora": "05:50:00",
+    "descripcion": "Una ubicación adicional"
+  }
+]

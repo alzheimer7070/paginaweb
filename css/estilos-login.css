@@ -1,0 +1,250 @@
+:root {
+  --morado-principal: #6a1b9a;
+  --morado-oscuro: #4a148c;
+  --fondo-general: #f4f6f8;
+  /* Para el resto de la app, no tanto para el login */
+  --texto-oscuro: #333;
+  --blanco: #ffffff;
+  --lila-claro: #BDABDE;
+  /* Un tono más suave que el principal */
+  --sombra-suave: rgba(0, 0, 0, 0.1);
+  --sombra-fuerte: rgba(0, 0, 0, 0.25);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+  /* Aplica la fuente globalmente */
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: var(--lila-claro);
+  /* Un color de fondo simple si no hay imagen */
+  overflow: hidden;
+  /* Previene scroll no deseado */
+}
+
+.login-page-container {
+  display: flex;
+  width: 90%;
+  /* Ancho general del contenedor en pantallas grandes */
+  max-width: 1000px;
+  /* Ancho máximo para el diseño */
+  height: 600px;
+  /* Altura fija para el diseño de dos paneles */
+  border-radius: 15px;
+  box-shadow: 0 10px 30px var(--sombra-suave);
+  overflow: hidden;
+  /* Asegura que los bordes redondeados se apliquen a los paneles internos */
+  background-color: var(--blanco);
+  /* Fondo general si un panel es transparente */
+}
+
+/* Panel Izquierdo: Bienvenida y Branding */
+.welcome-panel {
+  flex: 1;
+  /* Ocupa la mitad del espacio */
+  background-image: linear-gradient(to bottom right, var(--morado-oscuro), var(--morado-principal), var(--lila-claro));
+  /* Puedes experimentar con otros degradados morados o una imagen sutil */
+  /* background-image: url('IMAGENES/fondo_panel_izquierdo.png'); */
+  /* Si tienes una imagen para este panel */
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+  color: var(--blanco);
+  position: relative;
+  /* Para z-index y posibles efectos */
+}
+
+.app-branding {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 5px var(--sombra-fuerte);
+  line-height: 1.3;
+  padding: 0 1rem;
+  /* Pequeño padding interno */
+}
+
+.welcome-message {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.tagline {
+  font-size: 1rem;
+  opacity: 0.9;
+  max-width: 80%;
+  margin-top: 0.5rem;
+  line-height: 1.4;
+}
+
+/* Panel Derecho: Formulario de Login */
+.login-panel {
+  flex: 1;
+  /* Ocupa la otra mitad del espacio */
+  background-color: var(--blanco);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.login-form-container {
+  width: 100%;
+  max-width: 350px;
+  /* Ancho máximo para el formulario dentro del panel */
+  text-align: center;
+}
+
+.login-form-container h1 {
+  color: var(--morado-principal);
+  font-size: 2rem;
+  margin-bottom: 1.8rem;
+}
+
+/* Estilos de formulario (aplicados solo dentro de .login-form-container) */
+.login-form-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  /* Espacio entre los campos del formulario */
+}
+
+.login-form-container label {
+  text-align: left;
+  color: var(--texto-oscuro);
+  font-size: 0.9rem;
+  margin-bottom: 0.2rem;
+  font-weight: 500;
+}
+
+.login-form-container input {
+  padding: 0.8rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  color: var(--texto-oscuro);
+  background-color: #f8f8f8;
+  /* Un fondo ligeramente gris para inputs */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.login-form-container input:focus {
+  border-color: var(--morado-principal);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(106, 27, 154, 0.1);
+  background-color: var(--blanco);
+}
+
+.login-form-container button {
+  background-color: var(--morado-principal);
+  color: var(--blanco);
+  border: none;
+  padding: 0.9rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  /* Más espacio arriba del botón */
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 10px var(--sombra-suave);
+}
+
+.login-form-container button:hover {
+  background-color: var(--morado-oscuro);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px var(--sombra-fuerte);
+}
+
+.login-form-container .links {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  /* Espacio entre los enlaces */
+}
+
+.login-form-container .links a {
+  color: var(--morado-principal);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.2s ease, text-decoration 0.2s ease;
+}
+
+.login-form-container .links a:hover {
+  color: var(--morado-oscuro);
+  text-decoration: underline;
+}
+
+/* Mensaje de error/éxito */
+#message {
+  margin-top: 1rem;
+  font-weight: bold;
+  font-size: 0.95rem;
+  min-height: 1.2em;
+  color: red;
+  /* Por defecto rojo, JS lo cambia */
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 768px) {
+  .login-page-container {
+    flex-direction: column;
+    /* Apila los paneles verticalmente */
+    height: auto;
+    /* Altura automática */
+    width: 95%;
+    /* Un poco más de ancho en móvil */
+    max-width: 500px;
+    /* Limita el ancho total */
+  }
+
+  .welcome-panel {
+    padding: 2rem 1.5rem;
+    /* Ajustar padding */
+    min-height: 250px;
+    /* Altura mínima para el panel de bienvenida */
+  }
+
+  .app-branding {
+    font-size: 1.8rem;
+    /* Tamaño de fuente más pequeño en móvil */
+  }
+
+  .welcome-message {
+    font-size: 1.2rem;
+  }
+
+  .tagline {
+    font-size: 0.9rem;
+  }
+
+  .login-panel {
+    padding: 1.5rem;
+    /* Ajustar padding */
+  }
+
+  .login-form-container h1 {
+    font-size: 1.8rem;
+  }
+
+  .login-form-container button {
+    font-size: 1rem;
+    padding: 0.8rem 1.2rem;
+  }
+}

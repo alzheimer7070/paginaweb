@@ -1,0 +1,344 @@
+/* Variables de color*/
+:root {
+    --primary-purple: #6A0DAD;
+    /* Tu morado principal */
+    --light-purple-hover: #5A0CA0;
+    /* Morado para hover */
+    --text-dark: #333;
+    /* Gris oscuro para texto general */
+    --text-light: #aaa;
+    /* Gris claro para placeholders */
+    --border-light: #ddd;
+    /* Gris muy claro para bordes */
+    --white: #ffffff;
+}
+
+/* Estilos generales del cuerpo */
+body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #BDABDE;
+    /* Fondo morado */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: var(--text-dark);
+    /* Color de texto general */
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Contenedor principal que contendrá el formulario y el contenido lateral (si lo usas) */
+.contenido-principal {
+    display: flex;
+    /* Para poner el formulario y el contenido lateral uno al lado del otro */
+    background-color: var(--white);
+    /* Fondo blanco para el contenedor grande */
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    /* Para asegurar que el contenido no se desborde */
+    max-width: 900px;
+    /* Ancho máximo para el diseño de Google */
+    width: 100%;
+}
+
+/* Contenedor específico para el formulario */
+.form-container {
+    flex: 1;
+    /* Ocupa el espacio disponible */
+    padding: 35px 40px;
+    /* Más padding para el estilo de Google */
+    text-align: left;
+    /* Alinea el texto a la izquierda como Google */
+}
+
+/* Sección del título del formulario */
+.header {
+    text-align: center;
+    /* Centra el título */
+    margin-bottom: 30px;
+}
+
+
+/* Estilos para el título principal del formulario (MORADO) */
+h1 {
+    color: var(--primary-purple);
+    /* Título en morado */
+    margin-bottom: 10px;
+    /* Menos margen inferior para el subtítulo */
+    font-size: 1.8em;
+    /* Ajuste de tamaño */
+    font-weight: 600;
+    /* Peso de fuente más ligero para el título principal */
+}
+
+/* Estilo para el subtítulo o descripción debajo del h1 */
+.form-container p {
+    font-size: 0.9em;
+    color: #555;
+    margin-bottom: 25px;
+}
+
+/* Grupo de inputs para dos columnas (Nombre y Apellidos, Contraseña y Confirmación) */
+.input-group-two-columns {
+    display: flex;
+    gap: 15px;
+    /* Espacio entre los dos inputs */
+    margin-bottom: 18px;
+}
+
+.input-group-two-columns input {
+    width: 100%;
+    /* Cada input ocupa la mitad del espacio */
+    margin-bottom: 0;
+    /* Quita el margen inferior individual de los inputs */
+}
+
+/* Estilos para los campos de entrada de texto */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="tel"],
+select,
+textarea {
+    width: 100%;
+    /* Ocupa todo el ancho si no está en un grupo de dos columnas */
+    padding: 12px 15px;
+    margin-bottom: 18px;
+    /* Espacio entre campos */
+    border: 1px solid var(--border-light);
+    /* Borde gris muy claro */
+    border-radius: 4px;
+    /* Bordes ligeramente más cuadrados como Google */
+    font-size: 1em;
+    color: var(--text-dark);
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    /* Agregamos box-shadow para focus */
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--primary-purple);
+    /* Borde morado al hacer focus */
+    box-shadow: 0 0 0 1px var(--primary-purple);
+    /* Sombra suave para el focus */
+}
+
+/* Estilo para el placeholder de los inputs */
+input::placeholder {
+    color: var(--text-light);
+}
+
+/* Información de la contraseña */
+.password-info {
+    font-size: 0.85em;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.password-info p {
+    margin-top: 0;
+    margin-bottom: 10px;
+    line-height: 1.4;
+}
+
+/* Estilos para el checkbox "Mostrar contraseña" (replicando el estilo de Google) */
+.checkbox-container {
+    display: block;
+    position: relative;
+    padding-left: 25px;
+    /* Espacio para el checkbox personalizado */
+    margin-bottom: 15px;
+    cursor: pointer;
+    font-size: 0.9em;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    color: var(--text-dark);
+    text-align: left;
+    /* Alinea el texto a la izquierda */
+}
+
+.checkbox-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 18px;
+    width: 18px;
+    background-color: #eee;
+    /* Fondo del checkbox */
+    border-radius: 3px;
+    border: 1px solid #ccc;
+}
+
+.checkbox-container input:checked~.checkmark {
+    background-color: var(--primary-purple);
+    /* Color morado cuando está marcado */
+    border-color: var(--primary-purple);
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.checkbox-container input:checked~.checkmark:after {
+    display: block;
+}
+
+.checkbox-container .checkmark:after {
+    left: 6px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+
+/* Botón de "Siguiente" (MORADO) */
+button[type="submit"] {
+    background-color: var(--primary-purple);
+    /* Botón en morado */
+    color: white;
+    padding: 10px 24px;
+    /* Un poco menos de padding para el tamaño de Google */
+    border: none;
+    border-radius: 4px;
+    /* Bordes ligeramente más cuadrados */
+    font-size: 0.95em;
+    /* Tamaño de fuente ligeramente menor */
+    font-weight: 500;
+    /* Peso de fuente */
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    width: auto;
+    /* El botón no ocupa el 100% como Google */
+    min-width: 100px;
+    /* Ancho mínimo para el botón */
+    margin-top: 20px;
+    margin-bottom: 0;
+    float: right;
+    /* Alinea a la derecha como Google */
+}
+
+button[type="submit"]:hover {
+    background-color: var(--light-purple-hover);
+    /* Tono más oscuro al pasar el ratón */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    /* Sombra al pasar el ratón */
+}
+
+/* Contenedor de enlaces (Prefiero iniciar sesión) */
+.links {
+    margin-top: 20px;
+    text-align: left;
+    /* Alinea a la izquierda */
+}
+
+.links a {
+    color: var(--primary-purple);
+    /* Enlace en morado */
+    text-decoration: none;
+    font-size: 0.9em;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.links a:hover {
+    text-decoration: underline;
+}
+
+/* Estilos para el contenido lateral (imagen y texto) */
+.side-content {
+    background-color: #f0f2f5;
+    /* Un gris claro para el fondo del panel lateral */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 30px;
+    text-align: center;
+    flex: 0.6;
+    /* Ocupa menos espacio que el formulario */
+    border-top-right-radius: 10px;
+    /* Bordes redondeados */
+    border-bottom-right-radius: 10px;
+}
+
+.side-content .side-image {
+    max-width: 80%;
+    /* Ajusta el tamaño de tu imagen lateral */
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.side-content h2 {
+    color: var(--text-dark);
+    font-size: 1.2em;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+/* Media Queries para responsividad */
+@media (max-width: 768px) {
+    .contenido-principal {
+        flex-direction: column;
+        /* Apila el formulario y el contenido lateral en pantallas pequeñas */
+        max-width: 100%;
+        border-radius: 0;
+        /* Quita los bordes redondeados en pantallas muy pequeñas */
+        box-shadow: none;
+        /* Quita la sombra en pantallas muy pequeñas */
+    }
+
+    .form-container {
+        padding: 25px 20px;
+        /* Menos padding en pantallas pequeñas */
+    }
+
+    .side-content {
+        border-radius: 0;
+        /* Quita los bordes redondeados */
+        padding: 20px;
+        flex: auto;
+    }
+
+    .input-group-two-columns {
+        flex-direction: column;
+        /* Apila los inputs de dos columnas en pantallas pequeñas */
+        gap: 0;
+        /* Quita el espacio entre ellos */
+    }
+
+    .input-group-two-columns input {
+        margin-bottom: 18px;
+        /* Restaura el margen inferior */
+    }
+
+    button[type="submit"] {
+        float: none;
+        /* Desactiva float */
+        width: 100%;
+        /* Ocupa todo el ancho */
+    }
+}

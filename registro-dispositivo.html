@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Registrar Dispositivo</title>
+  <link rel="stylesheet" href="css/estilos-alzheimer.css" />
+</head>
+<body>
+<header class="navbar">
+    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+    <h1>Monitoreo Alzheimer</h1>
+  </header>
+
+  <aside class="menu">
+    <button onclick="window.location.href='index.html#mapa'">Mapa actual</button>
+    <button onclick="window.location.href='registro-paciente.html'">Registrar Dispositivo</button>
+    <button onclick="window.location.href='index.html#historial'">Historial de Ubicación</button>
+    <button onclick="window.location.href='index.html#dispoReg'">Dispositivos Registrados</button>
+    <button onclick="window.location.href='index.html#zonas'">Zonas Seguras</button>
+    <button onclick="window.location.href='index.html#configuracion'">Configuración</button>
+    <button onclick="logout()">Cerrar Sesión</button>
+  </aside>
+
+  <main class="main">
+    <section>
+      <h2>Registrar Dispositivo</h2>
+      <p>Por favor, introduce el ID del dispositivo GPS que deseas vincular a tu cuenta.</p>
+      <form onsubmit="return verificarDispositivo(event)">
+        <input type="text" id="idDispositivo" placeholder="ID del dispositivo" required />
+        <button type="submit">Verificar y Registrar</button>
+      </form>
+      <p id="mensaje-dispositivo"></p>
+    </section>
+  </main>
+  <script>
+    // Funciones toggleMenu y logout, duplicadas aquí para que funcionen en esta página
+    function toggleMenu() {
+      const menu = document.querySelector('.menu');
+      menu.classList.toggle('abierta');
+    }
+
+    function logout() {
+      localStorage.clear();
+      window.location.href = 'login.html';
+    }
+
+    // La función `mostrarSeccion` no es necesaria en este archivo HTML,
+    // ya que toda la navegación se maneja con `window.location.href`.
+    // Si la tuvieras definida aquí, podrías eliminarla.
+
+
+    function verificarDispositivo(event) {
+      event.preventDefault();
+      const id = document.getElementById('idDispositivo').value;
+      const mensaje = document.getElementById('mensaje-dispositivo');
+      const userId = localStorage.getItem('userId');
+
+      if (!userId) {
+          mensaje.textContent = "Error: No se encontró el ID de usuario. Por favor, inicia sesión de nuevo.";
+          mensaje.style.color = 'red';
+          return;
+      }
+
+      // SIMULACIÓN DE REGISTRO DE DISPOSITIVO:
+      if (id === '7070g' || id === 'simulado123') {
+        localStorage.setItem('dispositivoVerificado', id);
+        localStorage.setItem('lastRegisteredDeviceId', id);
+
+        mensaje.textContent = `Dispositivo ${id} verificado y listo para vincular al paciente (simulado).`;
+        mensaje.style.color = 'green';
+
+        setTimeout(() => {
+          window.location.href = 'registro-paciente.html';
+        }, 1500);
+      } else {
+        mensaje.textContent = "Dispositivo no reconocido. Intenta con '7070g' o 'simulado123'. (simulado)";
+        mensaje.style.color = 'red';
+      }
+    }
+
+    // Validación al cargar registro-dispositivo.html: si no hay sesión, redirige al login
+    window.onload = () => {
+      if (localStorage.getItem('isAuthenticated') !== 'true') {
+        window.location.href = 'login.html';
+      }
+    };
+  </script>
+</body>
+</html>

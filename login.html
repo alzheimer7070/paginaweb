@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inicio de Sesión - Monitoreo Alzheimer</title>
+  <link rel="stylesheet" href="css/estilos-login.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <div class="login-page-container">
+    <div class="welcome-panel">
+      <h2 class="app-branding">MONITOREO GPS PARA EL CUIDADO DE PERSONAS CON ALZHEIMER</h2>
+      <p class="welcome-message">¡Qué gusto verte de nuevo!</p>
+      <p class="tagline">Tu tranquilidad, nuestra prioridad. Siempre conectado con quienes más importan.</p>
+    </div>
+
+    <div class="login-panel">
+      <div class="login-form-container">
+        <h1>Inicio de Sesión</h1>
+        <form id="login-form">
+          <label for="username">Usuario</label>
+          <input type="text" id="username" placeholder="Tu usuario" required>
+
+          <label for="password">Contraseña</label>
+          <input type="password" id="password" placeholder="Tu contraseña" required>
+
+          <button type="submit">Iniciar Sesión</button>
+        </form>
+        <p id="message"></p>
+        <div class="links">
+          <a href="forgot-password.html">Olvidé mi contraseña</a>
+          <a href="create-account.html">Crear nueva cuenta</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/login.js"></script>
+</body>
+
+</html>
