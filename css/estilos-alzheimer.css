@@ -593,3 +593,31 @@ form button:hover {
   color: black;
   text-decoration: none;
 }
+
+/* css/estilos-alzheimer.css */
+
+/* Estilo para el nuevo botón de actualizar ubicación */
+#btn-actualizar-ubicacion {
+  background-color: var(--morado-principal);
+  color: white;
+  border: none;
+  border-radius: 50%; /* Lo hace redondo */
+  width: 30px;
+  height: 30px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-left: 10px;
+  vertical-align: middle; /* Alinea el botón con el texto del título */
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+#btn-actualizar-ubicacion:hover {
+  background-color: var(--morado-oscuro);
+  transform: rotate(90deg); /* Efecto de rotación al pasar el ratón */
+}
+
+#btn-actualizar-ubicacion:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
