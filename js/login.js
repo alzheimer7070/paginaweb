@@ -1,11 +1,15 @@
-// Contenido para el archivo: js/login.js
+// Contenido CORREGIDO para el archivo: js/login.js
 
 document.getElementById('login-form').addEventListener('submit', async function (event) {
   event.preventDefault();
 
-  const usuario = document.getElementById('loginUsuario').value.trim();
-  const contrasena = document.getElementById('loginPassword').value;
-  const loginMessage = document.getElementById('loginMessage');
+  // ----- CORRECCIÓN AQUÍ -----
+  // Usamos los IDs 'username' y 'password' que existen en tu login.html
+  const usuario = document.getElementById('username').value.trim();
+  const contrasena = document.getElementById('password').value;
+  // Usamos el ID 'message' que existe en tu login.html
+  const loginMessage = document.getElementById('message');
+  loginMessage.textContent = ''; // Limpiamos mensajes anteriores
 
   try {
     const res = await fetch('https://mi-api-express.onrender.com/login', {
@@ -20,8 +24,9 @@ document.getElementById('login-form').addEventListener('submit', async function 
       loginMessage.textContent = `✅ Bienvenido, ${data.data.nombreCuidador}`;
       loginMessage.style.color = 'green';
       localStorage.setItem('usuario', JSON.stringify(data.data)); // Guardar sesión
-      
-      // Aquí deberías redirigir al dashboard principal
+      localStorage.setItem('isAuthenticated', 'true'); // Guardar estado de autenticación
+
+      // Redirigir al dashboard principal después de un momento
       setTimeout(() => {
           window.location.href = 'index.html'; 
       }, 1500);
