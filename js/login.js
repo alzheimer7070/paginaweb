@@ -1,59 +1,37 @@
-// js/login.js (versión mejorada)
+// Contenido para el archivo: js/login.js
 
 document.getElementById('login-form').addEventListener('submit', async function (event) {
-  event.preventDefault(); // Prevenir el envío tradicional
+  event.preventDefault();
 
-  const username = document.getElementById('username').value.trim();
-  const password = document.getElementById('password').value;
-  const messageElement = document.getElementById('message');
-
-  messageElement.textContent = ''; // Limpiar mensajes anteriores
-
-  // Validación simple en el frontend
-  if (!username || !password) {
-    messageElement.textContent = 'Por favor, introduce tu usuario y contraseña.';
-    messageElement.style.color = 'red';
-    return;
-  }
+  const usuario = document.getElementById('loginUsuario').value.trim();
+  const contrasena = document.getElementById('loginPassword').value;
+  const loginMessage = document.getElementById('loginMessage');
 
   try {
-    const response = await fetch('https://mi-api-express.onrender.com/login', { // Asumiendo que esta será la ruta del backend
+    const res = await fetch('https://mi-api-express.onrender.com/login', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        usuario: username, // El backend espera 'usuario'
-        contrasena: password // El backend espera 'contrasena'
-      }),
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ usuario, contrasena })
     });
 
-    const data = await response.json();
+    const data = await res.json();
 
-    if (response.ok) {
-      messageElement.textContent = data.message || 'Inicio de sesión exitoso. Redirigiendo...';
-      messageElement.style.color = 'green';
-
-      // Guardar estado de autenticación y ID de usuario si el backend lo envía
-      localStorage.setItem('isAuthenticated', 'true');
-      if (data.userId) {
-        localStorage.setItem('userId', data.userId);
-      }
+    if (res.ok && data.success) {
+      loginMessage.textContent = `✅ Bienvenido, ${data.data.nombreCuidador}`;
+      loginMessage.style.color = 'green';
+      localStorage.setItem('usuario', JSON.stringify(data.data)); // Guardar sesión
       
-      // Aquí podrías añadir la lógica para redirigir a registro-dispositivo.html
-      // si el backend te informa que el usuario no tiene dispositivos.
-      // Por ahora, redirigimos a la página principal.
+      // Aquí deberías redirigir al dashboard principal
       setTimeout(() => {
-        window.location.href = 'index.html';
+          window.location.href = 'index.html'; 
       }, 1500);
 
-    } else { // Si el servidor responde con un error (ej. 401 Credenciales incorrectas)
-      messageElement.textContent = data.mensaje || data.message || 'Usuario o contraseña incorrectos.';
-      messageElement.style.color = 'red';
+    } else {
+      loginMessage.textContent = data.message || 'Credenciales inválidas';
+      loginMessage.style.color = 'red';
     }
-  } catch (error) {
-    console.error('Error en fetch:', error);
-    messageElement.textContent = 'Error de conexión con el servidor.';
-    messageElement.style.color = 'red';
+  } catch (err) {
+    loginMessage.textContent = 'Error al conectar con el servidor';
+    loginMessage.style.color = 'red';
   }
 });
