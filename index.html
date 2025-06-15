@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="css/estilos-alzheimer.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
@@ -29,12 +30,16 @@
 
   <main class="main">
     <section id="mapa" class="seccion-visible">
-      <h2>Ubicación actual del paciente</h2>
-      <div id="map" style="height: 400px; width: 100%; border-radius: 8px;"></div>
-      <div class="datos-ubicacion">
-        <p>Cargando datos de ubicación...</p>
-      </div>
-    </section>
+  <h2>Ubicación actual del paciente
+    <button id="btn-actualizar-ubicacion" title="Actualizar ubicación">
+    <i class="fa-solid fa-arrows-rotate"></i>
+</button>
+  </h2>
+  <div id="map" style="height: 400px; width: 100%; border-radius: 8px;"></div>
+  <div class="datos-ubicacion">
+    <p>Cargando datos de ubicación...</p>
+  </div>
+</section>
 
     <section id="dispoReg" class="seccion-oculta">
       <h2>Dispositivos Registrados</h2>
