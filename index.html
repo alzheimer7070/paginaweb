@@ -31,10 +31,16 @@
   <main class="main">
     <section id="mapa" class="seccion-visible">
   <h2>Ubicación actual del paciente
-    <button id="btn-actualizar-ubicacion" title="Actualizar ubicación">
-    <i class="fa-solid fa-arrows-rotate"></i>
-</button>
-  </h2>
+  <!-- Botón para actualizar la ÚLTIMA ubicación -->
+  <button id="btn-actualizar-ubicacion" title="Actualizar última ubicación">
+      <i class="fa-solid fa-arrows-rotate"></i>
+  </button>
+
+  <!-- Botón para ver TODO el historial en el mapa -->
+  <button id="btn-mostrar-historial" title="Mostrar todo el historial en el mapa">Ver Historial Completo</button>
+</h2>
+    
+
   <div id="map" style="height: 400px; width: 100%; border-radius: 8px;"></div>
   <div class="datos-ubicacion">
     <p>Cargando datos de ubicación...</p>
@@ -177,10 +183,6 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="js/script.js"></script>
   <script>
-    function logout() {
-      localStorage.clear();
-      window.location.href = 'login.html';
-    }
 
     window.onload = () => {
       if (localStorage.getItem('isAuthenticated') !== 'true') {
@@ -197,5 +199,4 @@
     };
   </script>
 </body>
-
 </html>

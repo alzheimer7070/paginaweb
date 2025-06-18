@@ -1,152 +1,134 @@
-// Funciones de UI generales
-function toggleMenu() {
-  const menu = document.querySelector('.menu');
-  menu.classList.toggle('abierta');
-}
+// js/script.js
 
-function mostrarSeccion(id) {
-  document.querySelectorAll('main section').forEach(sec => {
-    sec.classList.remove('seccion-visible');
-    sec.classList.add('seccion-oculta');
-  });
-
-  const target = document.getElementById(id);
-  if (target) {
-    target.classList.remove('seccion-oculta');
-    target.classList.add('seccion-visible');
-
-    // Invalida el tamaño de los mapas si es necesario para que se rendericen correctamente
-    if (id === 'mapa' && mapaPrincipalInstance) {
-      mapaPrincipalInstance.invalidateSize();
-    } else if (id === 'historial' && mapaHistorialInstance) {
-      mapaHistorialInstance.invalidateSize();
-    } else if (id === 'zonas' && mapaZonasInstance) {
-      mapaZonasInstance.invalidateSize();
-    }
-  }
-}
-
-// Variables globales para las instancias de los mapas
+// --- VARIABLES GLOBALES Y FUNCIONES DE UI ---
+const API_URL = 'https://mi-api-express.onrender.com';
 let mapaPrincipalInstance = null;
-let marcadorPrincipal = null;
-let mapaHistorialInstance = null;
-let mapaZonasInstance = null;
+let marcadoresActuales = []; // Array para gestionar los marcadores del mapa
 
-// --- LÓGICA DEL MAPA PRINCIPAL ---
-
-/**
- * Obtiene la última ubicación del usuario logueado desde la API 
- * y la muestra en el mapa principal.
- */
-async function actualizarUbicacion() {
-  const datosUbicacionDiv = document.querySelector('#mapa .datos-ubicacion');
-  const btnActualizar = document.getElementById('btn-actualizar-ubicacion');
-
-  if (!btnActualizar || !datosUbicacionDiv) return;
-
-  btnActualizar.disabled = true;
-  datosUbicacionDiv.innerHTML = '<p>Buscando ubicación...</p>';
-
-  try {
-    // 1. Obtener el usuario del localStorage
-    const usuarioData = JSON.parse(localStorage.getItem('usuario'));
-    if (!usuarioData || !usuarioData.usuario) {
-      throw new Error("No se pudo identificar al usuario. Por favor, inicie sesión de nuevo.");
-    }
-    const nombreDeUsuario = usuarioData.usuario;
-
-    // 2. Llamar a la API con el usuario específico
-    const response = await fetch(`https://mi-api-express.onrender.com/datos-ubicacion?usuario=${nombreDeUsuario}`);
-    const data = await response.json();
-
-    if (!response.ok || !data.success) {
-      throw new Error(data.message || 'No se pudo obtener la ubicación.');
-    }
-
-    // 3. Procesar la respuesta (que ahora es un array)
-    const ubicaciones = data.data;
-    if (ubicaciones.length === 0) {
-      throw new Error("No hay ubicaciones registradas para este usuario.");
-    }
-
-    // Tomamos la primera ubicación del array (la más reciente)
-    const ultimoDato = ubicaciones[0]; 
-    const ubicacion = ultimoDato.ubicacion;
-    const fecha = new Date(ultimoDato.fecha_registro);
-    const lat = ubicacion.latitud;
-    const lng = ubicacion.longitud;
-    
-    // 4. Actualizar el mapa
-    if (!marcadorPrincipal) {
-      marcadorPrincipal = L.marker([lat, lng]).addTo(mapaPrincipalInstance);
-    } else {
-      marcadorPrincipal.setLatLng([lat, lng]);
-    }
-
-    mapaPrincipalInstance.setView([lat, lng], 16);
-    marcadorPrincipal.bindPopup(`<b>Última ubicación de ${nombreDeUsuario}</b><br>Dispositivo: ${ultimoDato.dispositivo}<br>Fecha: ${fecha.toLocaleString('es-MX')}`).openPopup();
-
-    datosUbicacionDiv.innerHTML = `
-      <p><strong>Fecha:</strong> ${ultimoDato.fecha_dato}</p>
-      <p><strong>Hora:</strong> ${ultimoDato.hora_dato}</p>
-      <p><strong>Latitud:</strong> ${lat}</p>
-      <p><strong>Longitud:</strong> ${lng}</p>
-      <p><strong>Dispositivo:</strong> ${ultimoDato.dispositivo}</p>
-    `;
-
-  } catch (error) {
-    console.error('Error al actualizar la ubicación:', error);
-    datosUbicacionDiv.innerHTML = `<p style="color:red;">${error.message}</p>`;
-  } finally {
-    btnActualizar.disabled = false;
-  }
+// Función para mostrar/ocultar el menú lateral en móviles
+function toggleMenu() {
+    document.querySelector('.menu').classList.toggle('abierta');
 }
 
-// --- LÓGICA DE OTRAS SECCIONES (SIMULADA POR AHORA) ---
-
-// Función para inicializar el mapa de la sección de historial
-function inicializarMapaHistorial() {
-    if (document.getElementById('mapa-historial') && !mapaHistorialInstance) {
-        mapaHistorialInstance = L.map('mapa-historial').setView([19.4326, -99.1332], 13);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mapaHistorialInstance);
+// Función para cambiar entre secciones del dashboard
+function mostrarSeccion(id) {
+    document.querySelectorAll('main section').forEach(sec => sec.classList.replace('seccion-visible', 'seccion-oculta'));
+    const target = document.getElementById(id);
+    if (target) {
+        target.classList.replace('seccion-oculta', 'seccion-visible');
+        if (id === 'mapa' && mapaPrincipalInstance) {
+            mapaPrincipalInstance.invalidateSize();
+        }
     }
 }
 
-// Función para inicializar el mapa de la sección de zonas seguras
-function inicializarMapaZonas() {
-    if (document.getElementById('mapa-zonas') && !mapaZonasInstance) {
-        mapaZonasInstance = L.map('mapa-zonas').setView([19.4326, -99.1332], 13);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mapaZonasInstance);
-    }
+// Función para cerrar la sesión del usuario
+function logout() {
+    localStorage.removeItem('currentUser');
+    localStorage.removeItem('isAuthenticated');
+    window.location.href = 'login.html';
 }
 
-// --- EVENT LISTENER PRINCIPAL ---
+// --- LÓGICA PRINCIPAL DEL DASHBOARD ---
 
 document.addEventListener("DOMContentLoaded", function () {
-  
-  // Inicializar el mapa principal una sola vez
-  if (document.getElementById('map')) {
-    mapaPrincipalInstance = L.map('map').setView([19.4326, -99.1332], 5); // Vista inicial general
+    // 1. Proteger la página
+    if (localStorage.getItem('isAuthenticated') !== 'true') {
+        window.location.href = 'login.html';
+        return;
+    }
+
+    // 2. Inicializar el mapa
+    mapaPrincipalInstance = L.map('map').setView([19.4326, -99.1332], 5);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; OpenStreetMap contributors'
+        attribution: '&copy; OpenStreetMap contributors'
     }).addTo(mapaPrincipalInstance);
 
-    // Llamamos a la función para obtener la ubicación real al cargar la página
-    actualizarUbicacion(); 
-    
-    // Añadimos el listener al botón para que llame a la misma función al hacer clic
-    const btnActualizar = document.getElementById('btn-actualizar-ubicacion');
-    if (btnActualizar) {
-      btnActualizar.addEventListener('click', actualizarUbicacion);
-    }
-  }
+    // 3. Asignar eventos a AMBOS botones
+    document.getElementById('btn-actualizar-ubicacion')?.addEventListener('click', cargarUltimaUbicacion);
+    document.getElementById('btn-mostrar-historial')?.addEventListener('click', cargarHistorialCompleto);
 
-  // Inicializar los otros mapas cuando sea necesario (al mostrar su sección)
-  // La función mostrarSeccion() se encarga de esto.
-  inicializarMapaHistorial();
-  inicializarMapaZonas();
-
-  // Aquí iría la lógica para los formularios de historial, zonas, configuración, etc.
-  // Por ahora, se dejan las simulaciones o funcionalidades básicas.
-  
+    // 4. Cargar la última ubicación por defecto
+    cargarUltimaUbicacion();
 });
+
+// --- FUNCIONES DEL MAPA ---
+
+function limpiarMarcadores() {
+    marcadoresActuales.forEach(marker => mapaPrincipalInstance.removeLayer(marker));
+    marcadoresActuales = [];
+}
+
+// Función para cargar SOLO la última ubicación del usuario
+async function cargarUltimaUbicacion() {
+    const infoDiv = document.querySelector('#mapa .datos-ubicacion');
+    infoDiv.innerHTML = '<p>Cargando última ubicación...</p>';
+    limpiarMarcadores();
+
+    try {
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        if (!currentUser || !currentUser.usuario) throw new Error("Sesión no válida.");
+        
+        const response = await fetch(`${API_URL}/datos-ubicacion?usuario=${currentUser.usuario}`);
+        const data = await response.json();
+
+        if (!response.ok || !data.success) throw new Error(data.message || "No se pudo cargar.");
+        
+        const ubicaciones = data.data;
+        if (ubicaciones.length === 0) throw new Error("No hay ubicaciones para este usuario.");
+
+        const ultimoDato = ubicaciones[0]; // El más reciente
+        const ubicacion = ultimoDato.ubicacion;
+        const fecha = new Date(ultimoDato.fecha_registro);
+
+        mapaPrincipalInstance.setView([ubicacion.latitud, ubicacion.longitud], 16);
+        const marker = L.marker([ubicacion.latitud, ubicacion.longitud]).addTo(mapaPrincipalInstance);
+        marker.bindPopup(`<b>Última Ubicación</b><br>Dispositivo: ${ultimoDato.dispositivo}<br>Fecha: ${fecha.toLocaleString('es-MX')}`).openPopup();
+        marcadoresActuales.push(marker);
+
+        infoDiv.innerHTML = `<p><strong>Dispositivo:</strong> ${ultimoDato.dispositivo}</p><p><strong>Fecha:</strong> ${ultimoDato.fecha_dato} - ${ultimoDato.hora_dato}</p>`;
+    } catch (error) {
+        infoDiv.innerHTML = `<p style="color:red;">${error.message}</p>`;
+    }
+}
+
+// NUEVA FUNCIÓN para cargar TODO el historial del usuario
+async function cargarHistorialCompleto() {
+    const infoDiv = document.querySelector('#mapa .datos-ubicacion');
+    infoDiv.innerHTML = '<p>Cargando historial completo...</p>';
+    limpiarMarcadores();
+
+    try {
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        if (!currentUser || !currentUser.usuario) throw new Error("Sesión no válida.");
+
+        const response = await fetch(`${API_URL}/datos-ubicacion?usuario=${currentUser.usuario}`);
+        const data = await response.json();
+
+        if (!response.ok || !data.success) throw new Error(data.message || "No se pudo cargar el historial.");
+        
+        const ubicaciones = data.data;
+        if (ubicaciones.length === 0) throw new Error("No hay historial para este usuario.");
+
+        const markerGroup = [];
+        ubicaciones.forEach(punto => {
+            const ubicacion = punto.ubicacion || punto.contenido;
+            if(ubicacion && ubicacion.latitud && ubicacion.longitud) {
+                const marker = L.marker([ubicacion.latitud, ubicacion.longitud]).addTo(mapaPrincipalInstance);
+                marker.bindPopup(`<b>Dispositivo:</b> ${punto.dispositivo}<br><b>Fecha:</b> ${new Date(punto.fecha_registro).toLocaleString('es-MX')}`);
+                marcadoresActuales.push(marker);
+                markerGroup.push([ubicacion.latitud, ubicacion.longitud]);
+            }
+        });
+        
+        if (markerGroup.length > 0) {
+            mapaPrincipalInstance.fitBounds(markerGroup); // Ajusta el mapa para que se vean todos los puntos
+            infoDiv.innerHTML = `<p>Mostrando ${markerGroup.length} puntos del historial de ${currentUser.usuario}.</p>`;
+        } else {
+             infoDiv.innerHTML = `<p>No se encontraron ubicaciones con coordenadas válidas.</p>`;
+        }
+
+    } catch (error) {
+        infoDiv.innerHTML = `<p style="color:red;">${error.message}</p>`;
+    }
+}
