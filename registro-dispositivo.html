@@ -34,7 +34,6 @@
     </section>
   </main>
   <script>
-    // Funciones toggleMenu y logout, duplicadas aquí para que funcionen en esta página
     function toggleMenu() {
       const menu = document.querySelector('.menu');
       menu.classList.toggle('abierta');
@@ -44,10 +43,6 @@
       localStorage.clear();
       window.location.href = 'login.html';
     }
-
-    // La función `mostrarSeccion` no es necesaria en este archivo HTML,
-    // ya que toda la navegación se maneja con `window.location.href`.
-    // Si la tuvieras definida aquí, podrías eliminarla.
 
 
     function verificarDispositivo(event) {

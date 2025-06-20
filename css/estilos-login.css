@@ -2,7 +2,6 @@
   --morado-principal: #6a1b9a;
   --morado-oscuro: #4a148c;
   --fondo-general: #f4f6f8;
-  /* Para el resto de la app, no tanto para el login */
   --texto-oscuro: #333;
   --blanco: #ffffff;
   --lila-claro: #BDABDE;
@@ -51,9 +50,6 @@ body {
   flex: 1;
   /* Ocupa la mitad del espacio */
   background-image: linear-gradient(to bottom right, var(--morado-oscuro), var(--morado-principal), var(--lila-claro));
-  /* Puedes experimentar con otros degradados morados o una imagen sutil */
-  /* background-image: url('IMAGENES/fondo_panel_izquierdo.png'); */
-  /* Si tienes una imagen para este panel */
   background-size: cover;
   background-position: center;
   display: flex;

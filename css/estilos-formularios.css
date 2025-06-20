@@ -1,7 +1,7 @@
 /* Variables de color*/
 :root {
     --primary-purple: #6A0DAD;
-    /* Tu morado principal */
+    /* morado principal */
     --light-purple-hover: #5A0CA0;
     /* Morado para hover */
     --text-dark: #333;
@@ -29,7 +29,7 @@ body {
     box-sizing: border-box;
 }
 
-/* Contenedor principal que contendrá el formulario y el contenido lateral (si lo usas) */
+/* Contenedor principal que contendrá el formulario y el contenido lateral */
 .contenido-principal {
     display: flex;
     /* Para poner el formulario y el contenido lateral uno al lado del otro */
@@ -40,18 +40,14 @@ body {
     overflow: hidden;
     /* Para asegurar que el contenido no se desborde */
     max-width: 900px;
-    /* Ancho máximo para el diseño de Google */
     width: 100%;
 }
 
 /* Contenedor específico para el formulario */
 .form-container {
     flex: 1;
-    /* Ocupa el espacio disponible */
     padding: 35px 40px;
-    /* Más padding para el estilo de Google */
     text-align: left;
-    /* Alinea el texto a la izquierda como Google */
 }
 
 /* Sección del título del formulario */
@@ -112,7 +108,6 @@ textarea {
     border: 1px solid var(--border-light);
     /* Borde gris muy claro */
     border-radius: 4px;
-    /* Bordes ligeramente más cuadrados como Google */
     font-size: 1em;
     color: var(--text-dark);
     box-sizing: border-box;
@@ -148,7 +143,7 @@ input::placeholder {
     line-height: 1.4;
 }
 
-/* Estilos para el checkbox "Mostrar contraseña" (replicando el estilo de Google) */
+/* Estilos para el checkbox "Mostrar contraseña" */
 .checkbox-container {
     display: block;
     position: relative;
@@ -238,7 +233,6 @@ button[type="submit"] {
     margin-top: 20px;
     margin-bottom: 0;
     float: right;
-    /* Alinea a la derecha como Google */
 }
 
 button[type="submit"]:hover {

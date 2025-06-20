@@ -270,7 +270,6 @@ form button:hover {
   margin-left: 0.5rem;
   /* Espacio si hay varios botones */
   box-shadow: none;
-  /* No queremos la sombra general del botón para estos pequeños */
   transform: none;
   /* Anular la transformación al hover */
 }
@@ -594,19 +593,17 @@ form button:hover {
   text-decoration: none;
 }
 
-/* css/estilos-alzheimer.css */
-
-/* Estilo para el nuevo botón de actualizar ubicación (más grande y visible) */
+/* Estilo para el nuevo botón de actualizar ubicación */
 #btn-actualizar-ubicacion {
   background-color: var(--morado-principal);
   color: white;
   border: none;
   border-radius: 50%; 
-  width: 40px;      /* <-- CAMBIO: Más ancho */
-  height: 40px;     /* <-- CAMBIO: Más alto */
-  font-size: 18px;    /* <-- CAMBIO: Icono más grande */
+  width: 40px;      /* <-- Más ancho */
+  height: 40px;     /* <-- Más alto */
+  font-size: 18px;    /* <-- cono más grande */
   cursor: pointer;
-  margin-left: 15px; /* Un poco más de espacio */
+  margin-left: 15px; /* espacio */
   vertical-align: middle;
   transition: transform 0.2s ease, background-color 0.2s ease;
   box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Sombra para más profundidad */
@@ -614,7 +611,7 @@ form button:hover {
 
 #btn-actualizar-ubicacion:hover {
   background-color: var(--morado-oscuro);
-  transform: rotate(120deg); /* Efecto de rotación más pronunciado */
+  transform: rotate(120deg); /* Efecto de rotación */
 }
 
 #btn-actualizar-ubicacion:disabled {
@@ -628,12 +625,12 @@ form button:hover {
   color: white;
   border: none;
   border-radius: 20%; 
-  width: 150px;      /* <-- CAMBIO: Más ancho */
-  height: 60px;     /* <-- CAMBIO: Más alto */
-  font-size: 18px;    /* <-- CAMBIO: Icono más grande */
+  width: 150px;      
+  height: 60px;     
+  font-size: 18px;    
   cursor: pointer;
-  margin-left: 10px; /* Un poco más de espacio */
+  margin-left: 10px; 
   vertical-align: middle;
   transition: transform 0.2s ease, background-color 0.2s ease;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Sombra para más profundidad */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2); 
 }

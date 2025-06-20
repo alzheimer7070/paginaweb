@@ -40,7 +40,7 @@
     </section>
   </main>
   <script>
-    // Funciones toggleMenu y logout, duplicadas aquí para que funcionen en esta página
+    // Funciones toggleMenu y logout
     function toggleMenu() {
       const menu = document.querySelector('.menu');
       menu.classList.toggle('abierta');
@@ -50,9 +50,6 @@
       localStorage.clear();
       window.location.href = 'login.html';
     }
-
-    // La función `mostrarSeccion` no es necesaria en este archivo HTML.
-    // Si la tuvieras definida aquí, podrías eliminarla.
 
 
     // Al cargar la página, intenta obtener el ID del dispositivo del localStorage
@@ -96,14 +93,13 @@
         return;
       }
 
-      // Validaciones básicas de formulario (puedes añadir más)
+      // Validaciones básicas de formulario
       if (!nombre || !edad || !direccion || !telefono) {
         mensaje.textContent = "Todos los campos del paciente son obligatorios.";
         mensaje.style.color = 'red';
         return;
       }
 
-      // SIMULACIÓN DE REGISTRO DE PACIENTE
       mensaje.textContent = `Paciente "${nombre}" registrado con el dispositivo "${idDispositivo}" para el cuidador (ID: ${userId}). (simulado)`;
       mensaje.style.color = 'green';
 
