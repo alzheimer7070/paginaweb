@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Historial de Ubicación - Monitoreo Alzheimer</title>
+  
+  <!-- Estilos y Librerías (los mismos que en index.html para consistencia) -->
+  <link rel="stylesheet" href="css/estilos-alzheimer.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+</head>
+
+<body>
+
+  <!-- Cabecera (Navbar) - Idéntica a la de index.html -->
+  <header class="navbar">
+    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+    <h1>Monitoreo Alzheimer</h1>
+  </header>
+
+  <!-- Menú Lateral - Idéntico, pero puedes marcar esta página como "activa" -->
+  <aside class="menu">
+    <button onclick="window.location.href='index.html'">Mapa actual</button>
+    <button onclick="window.location.href='registro-dispositivo.html'">Agregar Dispositivo</button>
+    <!-- Se añade una clase 'active' para indicar visualmente que estamos en esta página -->
+    <button class="active">Historial de Ubicación</button>
+    <button onclick="mostrarSeccionEnIndex('dispoReg')">Dispositivos Registrados</button>
+    <button onclick="mostrarSeccionEnIndex('zonas')">Zonas Seguras</button>
+    <button onclick="mostrarSeccionEnIndex('configuracion')">Configuración</button>
+    <button onclick="logout()">Cerrar Sesión</button>
+  </aside>
+
+  <!-- Contenido Principal de la Página de Historial -->
+  <main class="main">
+    <section id="historial-mapa-section" class="seccion-visible">
+      <h2>Historial Completo de Ubicaciones</h2>
+      
+      <!-- Contenedor donde se renderizará el mapa de Leaflet -->
+      <div id="historial-map" style="height: 500px; width: 100%; border-radius: 8px;"></div>
+      
+      <!-- Panel para mostrar mensajes de estado (cargando, errores, etc.) -->
+      <div class="datos-ubicacion" id="historial-info">
+        <p>Cargando historial de ubicaciones...</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <!-- Enlazamos al NUEVO archivo JavaScript que controla esta página -->
+  <script src="js/historial.js"></script>
+  
+  <!-- Script auxiliar para la navegación del menú -->
+  <script>
+    // Esta función nos permite navegar a index.html y mostrar una sección específica
+    function mostrarSeccionEnIndex(id) {
+        window.location.href = `index.html#${id}`;
+    }
+    // Funciones básicas que se repiten en todas las páginas con menú
+    function toggleMenu() {
+        document.querySelector('.menu').classList.toggle('abierta');
+    }
+    function logout() {
+        localStorage.removeItem('currentUser');
+        localStorage.removeItem('isAuthenticated');
+        window.location.href = 'login.html';
+    }
+  </script>
+</body>
+</html>

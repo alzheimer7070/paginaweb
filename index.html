@@ -5,198 +5,63 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Monitoreo Alzheimer</title>
+  
+  <!-- Enlaces a los estilos y librerías -->
   <link rel="stylesheet" href="css/estilos-alzheimer.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
 </head>
 
 <body>
 
+  <!-- Cabecera principal -->
   <header class="navbar">
     <button class="menu-toggle" onclick="toggleMenu()">☰</button>
     <h1>Monitoreo Alzheimer</h1>
   </header>
 
+  <!-- Menú lateral de navegación (simplificado) -->
   <aside class="menu">
     <button onclick="mostrarSeccion('mapa')">Mapa actual</button>
-    <button onclick="window.location.href='registro-dispositivo.html'">Agregar Dispositivo</button>
     <button onclick="mostrarSeccion('historial')">Historial de Ubicación</button>
-    <button onclick="mostrarSeccion('dispoReg')">Dispositivos Registrados</button>
-    <button onclick="mostrarSeccion('zonas')">Zonas Seguras</button>
-    <button onclick="mostrarSeccion('configuracion')">Configuración</button>
     <button onclick="logout()">Cerrar Sesión</button>
   </aside>
 
+  <!-- Contenido principal que cambia dinámicamente -->
   <main class="main">
-    <section id="mapa" class="seccion-visible">
-  <h2>Ubicación actual del paciente
-  <!-- Botón para actualizar la ÚLTIMA ubicación -->
-  <button id="btn-actualizar-ubicacion" title="Actualizar última ubicación">
-      <i class="fa-solid fa-arrows-rotate"></i>
-  </button>
-
-  <!-- Botón para ver TODO el historial en el mapa -->
-  <button id="btn-mostrar-historial" title="Mostrar todo el historial en el mapa">Ver Historial Completo</button>
-</h2>
     
-
-  <div id="map" style="height: 400px; width: 100%; border-radius: 8px;"></div>
-  <div class="datos-ubicacion">
-    <p>Cargando datos de ubicación...</p>
-  </div>
-</section>
-
-    <section id="dispoReg" class="seccion-oculta">
-      <h2>Dispositivos Registrados</h2>
-      <p>Aquí se listarán los dispositivos que has vinculado a tu cuenta.</p>
-      <form>
-        <input type="text" placeholder="ID del dispositivo" required>
-        <button type="submit">Buscar Dispositivo</button>
-      </form>
-      <div id="lista-dispositivos">
-        <p>No hay dispositivos registrados para mostrar (simulado).</p>
+    <!-- 1. Sección del Mapa de Ubicación Actual -->
+    <section id="mapa" class="seccion-visible">
+      <h2>Ubicación actual del paciente
+        <button id="btn-actualizar-ubicacion" title="Actualizar última ubicación">
+          <i class="fa-solid fa-arrows-rotate"></i>
+        </button>
+      </h2>
+      <div id="map" style="height: 400px; width: 100%; border-radius: 8px;"></div>
+      <div class="datos-ubicacion">
+        <p>Cargando datos de ubicación...</p>
       </div>
     </section>
 
-    <section id="registro" class="seccion-oculta">
-      <h2>Registrar Paciente</h2>
-      <p>Para registrar un paciente, por favor use la página dedicada de <a href="registro-paciente.html">Registro de
-          Paciente</a>.</p>
-    </section>
-
+    <!-- 2. Sección para ver el Historial por Día -->
     <section id="historial" class="seccion-oculta">
-      <h2>Historial de Ubicación</h2>
+      <h2>Historial de Ubicación por Día</h2>
       <form id="form-historial">
         <label for="fechaConsulta">Selecciona una fecha:</label>
         <input type="date" id="fechaConsulta" required>
         <button type="submit">Consultar Historial</button>
       </form>
       <div id="mapa-historial" style="height: 400px; width: 100%; border-radius: 8px; margin-top: 1rem;"></div>
-      <div class="datos-ubicacion-historial" style="margin-top: 1rem;">
-        <p id="info-historial">Ingresa una fecha para ver la última ubicación del paciente en ese día.</p>
+      <div id="info-historial" class="datos-ubicacion" style="margin-top: 1rem;">
+        <p>Selecciona una fecha para ver el recorrido.</p>
       </div>
     </section>
-
-    <section id="zonas" class="seccion-oculta">
-      <h2>Zonas Seguras</h2>
-      <p>Define áreas seguras para tus dispositivos de monitoreo.</p>
-      <form id="form-zonas-seguras">
-        <label for="dispositivoZona">Selecciona un dispositivo:</label>
-        <select id="dispositivoZona" required>
-          <option value="">-- Selecciona --</option>
-        </select>
-
-        <label for="nombreZona" style="margin-top: 1rem; display: block;">Nombre de la Zona:</label>
-        <input type="text" id="nombreZona" placeholder="Ej: Casa, Trabajo, Escuela" required>
-
-        <p style="margin-top: 1rem;">Haz clic en el mapa para definir el centro de la zona segura:</p>
-        <div id="mapa-zonas" style="height: 400px; width: 100%; border-radius: 8px;"></div>
-        <input type="hidden" id="latitudZona">
-        <input type="hidden" id="longitudZona">
-        <input type="hidden" id="radioZona" value="500">
-
-        <button type="button" id="btnGuardarZona" style="margin-top: 1rem;">Guardar Zona Segura</button>
-      </form>
-      <p id="mensaje-zona" style="margin-top: 1rem;"></p>
-
-      <h3 style="margin-top: 2rem;">Zonas Seguras Guardadas:</h3>
-      <div id="lista-zonas-seguras" style="margin-top: 1rem;">
-        <p>No hay zonas seguras configuradas (simulado).</p>
-      </div>
-    </section>
-
-    <section id="configuracion" class="seccion-oculta">
-      <h2>Configuración de Cuenta</h2>
-
-      <div class="config-section">
-        <h3>Datos del Cuidador <button type="button" class="edit-btn" data-form="cuidador">✏️ Editar</button></h3>
-        <form id="form-cuidador">
-          <label for="cuidadorNombre">Nombre:</label>
-          <input type="text" id="cuidadorNombre" disabled>
-          <label for="cuidadorEdad">Edad:</label>
-          <input type="number" id="cuidadorEdad" disabled min="18">
-          <label for="cuidadorOcupacion">Ocupación:</label>
-          <input type="text" id="cuidadorOcupacion" disabled>
-          <label for="cuidadorParentesco">Parentesco:</label>
-          <input type="text" id="cuidadorParentesco" disabled>
-          <label for="cuidadorCorreo">Correo:</label>
-          <input type="email" id="cuidadorCorreo" disabled>
-          <label for="cuidadorTelefono">Teléfono:</label>
-          <input type="tel" id="cuidadorTelefono" disabled>
-          <button type="submit" class="save-btn" style="display:none;">Guardar Cambios</button>
-          <button type="button" class="cancel-btn" style="display:none;">Cancelar</button>
-        </form>
-        <p id="mensaje-cuidador"></p>
-      </div>
-
-      <div class="config-section">
-        <h3 style="margin-top: 2rem;">Datos del Paciente Asignado <button type="button" class="edit-btn"
-            data-form="paciente">✏️ Editar</button></h3>
-        <form id="form-paciente">
-          <label for="pacienteNombreConfig">Nombre:</label>
-          <input type="text" id="pacienteNombreConfig" disabled>
-          <label for="pacienteEdadConfig">Edad:</label>
-          <input type="number" id="pacienteEdadConfig" disabled>
-          <label for="pacienteDireccionConfig">Dirección:</label>
-          <input type="text" id="pacienteDireccionConfig" disabled>
-          <label for="pacienteTelefonoConfig">Teléfono:</label>
-          <input type="tel" id="pacienteTelefonoConfig" disabled>
-          <label for="pacienteDispositivoConfig">ID Dispositivo:</label>
-          <input type="text" id="pacienteDispositivoConfig" disabled> <button type="submit" class="save-btn"
-            style="display:none;">Guardar Cambios</button>
-          <button type="button" class="cancel-btn" style="display:none;">Cancelar</button>
-        </form>
-        <p id="mensaje-paciente-config"></p>
-      </div>
-
-      <div class="config-section">
-        <h3 style="margin-top: 2rem;">Cambiar Contraseña</h3>
-        <form id="form-cambiar-contrasena">
-          <label for="currentPassword">Contraseña Actual:</label>
-          <input type="password" id="currentPassword" required>
-          <label for="newPassword">Nueva Contraseña:</label>
-          <input type="password" id="newPassword" required>
-          <label for="confirmNewPassword">Confirmar Nueva Contraseña:</label>
-          <input type="password" id="confirmNewPassword" required>
-          <button type="submit">Cambiar Contraseña</button>
-        </form>
-        <p id="mensaje-cambiar-contrasena"></p>
-      </div>
-
-    </section>
+    
   </main>
 
-  <div id="passwordConfirmModal" class="modal">
-    <div class="modal-content">
-      <button class="close-button" onclick="closePasswordConfirmModal()">&times;</button>
-      <h3>Confirma tu Contraseña</h3>
-      <p>Por favor, ingresa tu contraseña para confirmar esta acción.</p>
-      <input type="password" id="modalPasswordInput" placeholder="Contraseña" required>
-      <p id="modalMessage" style="color: red;"></p>
-      <button onclick="confirmPasswordAndProceed()">Confirmar</button>
-      <button onclick="closePasswordConfirmModal()">Cancelar</button>
-    </div>
-  </div>
-
-
+  <!-- Scripts al final para un mejor rendimiento de carga -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="js/script.js"></script>
-  <script>
-
-    window.onload = () => {
-      if (localStorage.getItem('isAuthenticated') !== 'true') {
-        window.location.href = 'login.html';
-      }
-      // Esta parte es importante para que el script.js sepa qué sección mostrar inicialmente
-      // cuando se carga la página (por ejemplo, si se llega con un hash como #configuracion)
-      const initialHash = window.location.hash.substring(1);
-      if (initialHash) {
-        mostrarSeccion(initialHash);
-      } else {
-        mostrarSeccion('mapa');
-      }
-    };
-  </script>
 </body>
 </html>
