@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const data = await response.json();
 
             if (response.ok && data.success) {
-                messageElement.textContent = `✅ ¡Bienvenido, ${data.data.nombreCuidador}!`;
+                messageElement.textContent = `¡Bienvenido, ${data.data.nombreCuidador}!`;
                 messageElement.style.color = 'green';
                 
                 // --- PASO CLAVE: Guardar los datos del usuario que inició sesión ---
